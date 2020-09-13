@@ -4,7 +4,6 @@ import firebase from '../firebaseConfig.js';
 const MainPage = (props) => {
   const [recipes, setRecipes] = useState([]);
   var db = firebase.firestore();
-  console.log(props.user);
   useEffect(() => {
     db.collection("recipes").where("userId", "==", props.user.uid)
       .get()
@@ -21,7 +20,7 @@ const MainPage = (props) => {
   return (
     <div>
       <h4> {props.user.displayName} </h4>
-      {recipes.map( (r) => r.title)}
+      <RecipeList recipes={recipes}/>
     </div>
   );
 }

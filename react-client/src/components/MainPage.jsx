@@ -4,8 +4,8 @@ import RecipeList from './RecipeList.jsx';
 
 const MainPage = (props) => {
   const [recipes, setRecipes] = useState([]);
-  var db = firebase.firestore();
   useEffect(() => {
+    var db = firebase.firestore();
     db.collection("recipes").where("userId", "==", props.user.uid)
       .get()
       .then((querySnapshot) => {
@@ -16,7 +16,7 @@ const MainPage = (props) => {
         setRecipes(recipeList);
       })
       .catch( (err) => console.log(err));
-  });
+  }, props.user.uid);
 
 
   return (

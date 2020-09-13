@@ -4,9 +4,7 @@ import Recipe from './Recipe.jsx';
 
 const RecipeList = (props) => {
 
-  const numberOfRows = Math.ceil(props.recipes.length / 3)
-
-
+  const numberOfRows = Math.ceil(props.recipes.length / 3);
 
   return (
     <div>

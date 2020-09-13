@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 import firebase from '../firebaseConfig.js';
+import RecipeList from './RecipeList.jsx';
 
 const MainPage = (props) => {
   const [recipes, setRecipes] = useState([]);
-  var db = firebase.firestore();
   useEffect(() => {
+    var db = firebase.firestore();
     db.collection("recipes").where("userId", "==", props.user.uid)
       .get()
       .then((querySnapshot) => {
@@ -13,8 +14,9 @@ const MainPage = (props) => {
             return recipeList.push(doc.data());
         });
         setRecipes(recipeList);
-      });
-  });
+      })
+      .catch( (err) => console.log(err));
+  }, props.user.uid);
 
 
   return (

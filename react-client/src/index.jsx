@@ -7,6 +7,7 @@ import "firebase/firestore";
 import $ from 'jquery';
 import firebase from './firebaseConfig';
 import MainPage from './components/MainPage.jsx';
+import '../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 
 
 class App extends React.Component {

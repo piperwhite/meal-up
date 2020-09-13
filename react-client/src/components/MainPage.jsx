@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import firebase from '../firebaseConfig.js';
+import RecipeList from './RecipeList.jsx';
 
 const MainPage = (props) => {
   const [recipes, setRecipes] = useState([]);
@@ -13,7 +14,8 @@ const MainPage = (props) => {
             return recipeList.push(doc.data());
         });
         setRecipes(recipeList);
-      });
+      })
+      .catch( (err) => console.log(err));
   });
 
 

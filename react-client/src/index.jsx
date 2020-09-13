@@ -1,12 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-const firebase = require('firebase/app');
 const firebaseui = require('firebaseui');
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 import "firebase/auth";
 import "firebase/firestore";
 import $ from 'jquery';
-import firebaseConfig from './firebaseConfig';
+import firebase from './firebaseConfig';
+import MainPage from './components/MainPage.jsx';
 
 
 class App extends React.Component {
@@ -15,8 +15,6 @@ class App extends React.Component {
     this.state = {
       isSignedIn: undefined,
     };
-
-    firebase.initializeApp(firebaseConfig);
 
     // Configure FirebaseUI.
     this.uiConfig = {
@@ -51,10 +49,11 @@ class App extends React.Component {
           </div>
         }
         {this.state.isSignedIn &&
-          <div>
-            Hello {firebase.auth().currentUser.displayName}. You are now signed In!
-            <a onClick={() => firebase.auth().signOut()}>Sign-out</a>
-          </div>
+          <MainPage user={firebase.auth().currentUser} handleSignOut={() => firebase.auth().signOut()} />
+          // <div>
+          //   Hello {firebase.auth().currentUser.displayName}. You are now signed In!
+          //   <a onClick={() => firebase.auth().signOut()}>Sign-out</a>
+          // </div>
         }
       </div>);
   }

@@ -1,8 +1,19 @@
-import React from "react";
+import React, { useState } from "react";
 import {Modal, Button} from 'react-bootstrap';
 import AddRecipeForm from './AddRecipeForm.jsx';
 
 const AddRecipeModal = (props) => {
+  const [recipe, setRecipe] = useState({});
+
+  var handleAddClick = function(){
+    props.handleRecipeAdded(recipe);
+    props.onHide();
+  }
+
+  var handleRecipeChanged = function(updatedRecipe) {
+    setRecipe(updatedRecipe);
+  }
+
   return (
     <Modal
       {...props}
@@ -16,10 +27,10 @@ const AddRecipeModal = (props) => {
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <AddRecipeForm />
+        <AddRecipeForm handleRecipeChanged={handleRecipeChanged}/>
       </Modal.Body>
       <Modal.Footer>
-        <Button onClick={props.onHide}>Add</Button>
+        <Button onClick={handleAddClick}>Add</Button>
       </Modal.Footer>
     </Modal>
   );

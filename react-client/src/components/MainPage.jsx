@@ -35,6 +35,10 @@ const MainPage = (props) => {
     setModalShow(true);
   }
 
+  var handleRecipeAdded = function(recipe) {
+    console.log(recipe);
+  }
+
   return (
     <div>
       <NavHeader userName={props.user.displayName} photoURL={props.user.photoURL} handleSignOut={props.handleSignOut} handleAddRecipe={handleAddRecipe}/>
@@ -45,6 +49,7 @@ const MainPage = (props) => {
       <AddRecipeModal
         show={modalShow}
         onHide={() => setModalShow(false)}
+        handleRecipeAdded={handleRecipeAdded}
       />
     </div>
   );

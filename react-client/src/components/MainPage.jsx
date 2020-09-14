@@ -3,11 +3,13 @@ import firebase from '../firebaseConfig.js';
 import RecipeList from './RecipeList.jsx';
 import NavHeader from './NavHeader.jsx';
 import RecipeDetail from './RecipeDetail.jsx';
+import AddRecipeModal from './AddRecipeModal.jsx';
 
 const MainPage = (props) => {
   const [recipes, setRecipes] = useState([]);
   const [showRecipeList, setShowRecipeList] = useState(true);
   const [currentRecipe, setCurrentRecipe] = useState();
+  const [modalShow, setModalShow] = useState(false);
 
   useEffect(() => {
     var db = firebase.firestore();
@@ -29,13 +31,21 @@ const MainPage = (props) => {
     setShowRecipeList(false);
   }
 
+  var handleAddRecipe = function() {
+    setModalShow(true);
+  }
+
   return (
     <div>
-      <NavHeader userName={props.user.displayName} photoURL={props.user.photoURL} handleSignOut={props.handleSignOut}/>
-      <div className='mt-5'>
+      <NavHeader userName={props.user.displayName} photoURL={props.user.photoURL} handleSignOut={props.handleSignOut} handleAddRecipe={handleAddRecipe}/>
+      <div className='m-5'>
         {showRecipeList && <RecipeList recipes={recipes} handleRecipeClick={handleRecipeClick}/>}
         {!showRecipeList && <RecipeDetail recipe={currentRecipe} />}
       </div>
+      <AddRecipeModal
+        show={modalShow}
+        onHide={() => setModalShow(false)}
+      />
     </div>
   );
 }

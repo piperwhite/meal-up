@@ -12,6 +12,8 @@ const MainPage = (props) => {
   const [showRecipeList, setShowRecipeList] = useState(true);
   const [currentRecipe, setCurrentRecipe] = useState();
   const [modalShow, setModalShow] = useState(false);
+  const [filteredRecipes, setFilteredRecipes] = useState([]);
+  const [query, setQuery] = useState('');
 
   useEffect(() => {
     fetchRecipes();
@@ -50,11 +52,21 @@ const MainPage = (props) => {
     });
   }
 
+  useEffect(() => {
+    let filtered = recipes.filter( recipe => recipe.title.toLowerCase().includes(query));
+    console.log(filtered);
+    setFilteredRecipes(filtered);
+  }, [query]);
+
+  var handleSearch = function( searchQuery ) {
+    setQuery(searchQuery.toLowerCase());
+  }
+
   return (
     <div>
-      <NavHeader userName={props.user.displayName} photoURL={props.user.photoURL} handleSignOut={props.handleSignOut} handleAddRecipe={handleAddRecipe}/>
+      <NavHeader userName={props.user.displayName} photoURL={props.user.photoURL} handleSignOut={props.handleSignOut} handleAddRecipe={handleAddRecipe} handleSearch={handleSearch}/>
       <div className='m-5'>
-        {showRecipeList && <RecipeList recipes={recipes} handleRecipeClick={handleRecipeClick}/>}
+        {showRecipeList && <RecipeList recipes={query === '' ? recipes : filteredRecipes} handleRecipeClick={handleRecipeClick}/>}
         {!showRecipeList && <RecipeDetail recipe={currentRecipe} />}
       </div>
       <AddRecipeModal

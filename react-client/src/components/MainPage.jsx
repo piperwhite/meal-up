@@ -36,7 +36,15 @@ const MainPage = (props) => {
   }
 
   var handleRecipeAdded = function(recipe) {
-    console.log(recipe);
+    var db = firebase.firestore();
+    recipe.userId = props.user.uid;
+    db.collection("recipes").doc().set(recipe)
+    .then(function() {
+        console.log("Document successfully written!");
+    })
+    .catch(function(error) {
+        console.error("Error writing document: ", error);
+    });
   }
 
   return (

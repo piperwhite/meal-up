@@ -11,7 +11,7 @@ const Recipe = (props) => {
           <Card.Text>
             {props.recipe.ingredients}
           </Card.Text>
-      <Button variant="primary">Make it</Button>
+      <Button variant="primary" onClick={() => props.handleRecipeClick(props.recipe)}>Make it</Button>
     </Card.Body>
   </Card>
   );

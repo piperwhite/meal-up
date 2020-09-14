@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { Navbar, NavDropdown, Image } from 'react-bootstrap';
-import {  } from 'react-bootstrap';
 
 const NavHeader = (props) => {
 

@@ -13,7 +13,7 @@ const RecipeList = (props) => {
         {
           props.recipes.slice(rowIndex * 3, (rowIndex *3) + 3).map(recipe => (
             <Col xs="12" sm="4">
-              <Recipe key={recipe.id} recipe={recipe} />
+              <Recipe key={recipe.id} recipe={recipe} handleRecipeClick={props.handleRecipeClick}/>
             </Col>
           ))}
         </Row>

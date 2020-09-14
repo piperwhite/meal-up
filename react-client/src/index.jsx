@@ -4,6 +4,7 @@ const firebaseui = require('firebaseui');
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 import "firebase/auth";
 import "firebase/firestore";
+import 'firebase/storage';
 import $ from 'jquery';
 import firebase from './firebaseConfig';
 import '../../node_modules/bootstrap/dist/css/bootstrap.min.css';

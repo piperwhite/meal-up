@@ -5,6 +5,8 @@ import NavHeader from './NavHeader.jsx';
 import RecipeDetail from './RecipeDetail.jsx';
 import AddRecipeModal from './AddRecipeModal.jsx';
 
+const db = firebase.firestore();
+
 const MainPage = (props) => {
   const [recipes, setRecipes] = useState([]);
   const [showRecipeList, setShowRecipeList] = useState(true);
@@ -12,7 +14,10 @@ const MainPage = (props) => {
   const [modalShow, setModalShow] = useState(false);
 
   useEffect(() => {
-    var db = firebase.firestore();
+    fetchRecipes();
+  }, [props.user.uid]);
+
+  var fetchRecipes = function() {
     db.collection("recipes").where("userId", "==", props.user.uid)
       .get()
       .then((querySnapshot) => {
@@ -23,8 +28,7 @@ const MainPage = (props) => {
         setRecipes(recipeList);
       })
       .catch( (err) => console.log(err));
-  }, [props.user.uid]);
-
+  }
 
   var handleRecipeClick = function(recipe) {
     setCurrentRecipe(recipe);
@@ -36,11 +40,10 @@ const MainPage = (props) => {
   }
 
   var handleRecipeAdded = function(recipe) {
-    var db = firebase.firestore();
     recipe.userId = props.user.uid;
     db.collection("recipes").doc().set(recipe)
     .then(function() {
-        console.log("Document successfully written!");
+        fetchRecipes();
     })
     .catch(function(error) {
         console.error("Error writing document: ", error);

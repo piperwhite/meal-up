@@ -3,6 +3,7 @@ import { Form, Button, InputGroup, FormControl } from 'react-bootstrap';
 
 const AddRecipeForm = (props) => {
   const [ingredients, setIngredients ] = useState([]);
+  const [directions, setDirections ] = useState([]);
   const [title, setTitle] = useState('');
 
   var  handleChange = function(i, event) {
@@ -21,7 +22,7 @@ const AddRecipeForm = (props) => {
     setIngredients( prevState => [...prevState, '']);
   }
 
-  var createUI = function() {
+  var createIngredientsUI = function() {
     return ingredients.map((el, i) =>
         <div key={i}>
          <InputGroup className="mb-3">
@@ -34,17 +35,47 @@ const AddRecipeForm = (props) => {
     )
   }
 
+  var  handleDirectionsChange = function(i, event) {
+    let values = [...directions];
+    values[i] = event.target.value;
+    setDirections(values);
+  }
+
+  var removeDirectionsClick = function(i) {
+    let values = [...directions];
+    values.splice(i,1);
+    setDirections(values);
+  }
+
+  var addDirectionsClick = function (){
+    setDirections( prevState => [...prevState, '']);
+  }
+
+  var createDirectionsUI = function() {
+    return directions.map((el, i) =>
+        <div key={i}>
+         <InputGroup className="mb-3">
+          <InputGroup.Prepend>
+            <Button variant="outline-secondary" onClick={ () => removeDirectionsClick(i)}> X </Button>
+          </InputGroup.Prepend>
+          <Form.Control as="textarea" rows="2" value={el||''} onChange={(e) => handleDirectionsChange(i, e)}/>
+        </InputGroup>
+        </div>
+    )
+  }
+
   var getRecipe = function() {
     var recipe = {
       title,
-      ingredients
+      ingredients,
+      directions
     };
     return recipe;
   }
 
   useEffect(() => {
     props.handleRecipeChanged(getRecipe())
-  }, [title, ingredients]);
+  }, [title, ingredients, directions]);
 
   var handleTitleChange = function(e) {
     setTitle(e.target.value);
@@ -61,12 +92,15 @@ const AddRecipeForm = (props) => {
       </Form.Group>
       <Form.Group controlId="exampleForm.ControlInput1">
         <Form.Label>Ingredients</Form.Label>
-        {createUI()}
+        {createIngredientsUI()}
+        <br></br>
         <Button variant="outline-info" size="sm" onClick={addClick}>Add Ingredient</Button>
       </Form.Group>
       <Form.Group controlId="exampleForm.ControlTextarea1">
         <Form.Label>Directions</Form.Label>
-        <Form.Control as="textarea" rows="2" />
+        {createDirectionsUI()}
+        <br></br>
+        <Button variant="outline-info" size="sm" onClick={addDirectionsClick}>Add steps</Button>
       </Form.Group>
     </Form>
   );

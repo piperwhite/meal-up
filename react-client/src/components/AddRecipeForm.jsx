@@ -138,14 +138,12 @@ const AddRecipeForm = (props) => {
       </Form.Group>
       <Form.Group controlId="exampleForm.ControlInput1">
         <Form.Label>Ingredients</Form.Label>
-        {createIngredientsUI()}
-        <br></br>
+        <div>{createIngredientsUI()}</div>
         <Button variant="outline-info" size="sm" onClick={addClick}>Add Ingredient</Button>
       </Form.Group>
       <Form.Group controlId="exampleForm.ControlTextarea1">
         <Form.Label>Directions</Form.Label>
-        {createDirectionsUI()}
-        <br></br>
+        <div>{createDirectionsUI()}</div>
         <Button variant="outline-info" size="sm" onClick={addDirectionsClick}>Add steps</Button>
       </Form.Group>
     </Form>

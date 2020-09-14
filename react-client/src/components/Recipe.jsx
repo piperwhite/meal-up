@@ -20,7 +20,7 @@ const Recipe = (props) => {
           }
         `}
       </style>
-        <Card style={{ width: '18rem' }} className="mb-4" onClick={() => props.handleRecipeClick(props.recipe)}>
+        <Card style={{ width: '18rem'}} className="mb-4" onClick={() => props.handleRecipeClick(props.recipe)}>
           <Card.Img variant="top" height={200} src={props.recipe.imageUrl} />
             <Card.Body>
               <Card.Title>{props.recipe.title}</Card.Title>

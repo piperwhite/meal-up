@@ -54,7 +54,6 @@ const MainPage = (props) => {
 
   useEffect(() => {
     let filtered = recipes.filter( recipe => recipe.title.toLowerCase().includes(query));
-    console.log(filtered);
     setFilteredRecipes(filtered);
   }, [query]);
 

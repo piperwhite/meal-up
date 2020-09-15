@@ -13,7 +13,7 @@ const Arrow = ({ text, className }) => {
 
 
 const ScrollableMenu = (props) => {
-  const [selected, setSelected] = useState('Churros');
+  const [selected, setSelected] = useState('');
 
   var onSelect = key => {
     setSelected(key);
@@ -24,12 +24,10 @@ const ScrollableMenu = (props) => {
   const ArrowLeft = Arrow({ text: '<', className: 'arrow-prev' });
   const ArrowRight = Arrow({ text: '>', className: 'arrow-next' });
 
-
-  console.log(props.recipes);
-  const menu = Categories(props.recipes, selected);
+  const menu = Categories(props.categories, selected);
 
   return (
-    <div>
+    <div className="mt-3" style={{ width: '80%', margin: '0 auto'}}>
       <ScrollMenu
         data={menu}
         arrowLeft={ArrowLeft}
@@ -37,6 +35,7 @@ const ScrollableMenu = (props) => {
         selected={selected}
         onSelect={onSelect}
       />
+      <hr></hr>
     </div>
   );
   }

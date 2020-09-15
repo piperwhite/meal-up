@@ -1,6 +1,7 @@
 .menu-item {
-  padding: 0 40px;
+  padding: 0 10px;
   margin: 5px 5px;
+  width: 8em;
   text-align: center;
   user-select: none;
   cursor: pointer;

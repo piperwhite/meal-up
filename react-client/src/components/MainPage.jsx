@@ -15,10 +15,27 @@ const MainPage = (props) => {
   const [modalShow, setModalShow] = useState(false);
   const [filteredRecipes, setFilteredRecipes] = useState([]);
   const [query, setQuery] = useState('');
+  const [categories, setCategories] = useState([]);
 
   useEffect(() => {
     fetchRecipes();
   }, [props.user.uid]);
+
+  var getCategories = function(recipeList) {
+    let catObj = {};
+    for(let i = 0; i < recipeList.length; i++){
+      let cat = recipeList[i].category;
+      if(cat!== undefined && catObj[cat] === undefined) {
+        catObj[cat] = recipeList[i].imageUrl;
+      }
+    }
+    let categoryList = [];
+    for (var prop in catObj) {
+      categoryList.push({'name': prop, 'imageUrl': catObj[prop]})
+    }
+    console.log(categoryList)
+    return categoryList;
+  }
 
   var fetchRecipes = function() {
     db.collection("recipes").where("userId", "==", props.user.uid)
@@ -29,6 +46,7 @@ const MainPage = (props) => {
             return recipeList.push(doc.data());
         });
         setRecipes(recipeList);
+        setCategories(getCategories(recipeList));
       })
       .catch( (err) => console.log(err));
   }
@@ -65,8 +83,8 @@ const MainPage = (props) => {
   return (
     <div>
       <NavHeader userName={props.user.displayName} photoURL={props.user.photoURL} handleSignOut={props.handleSignOut} handleAddRecipe={handleAddRecipe} handleSearch={handleSearch}/>
-      <ScrollableMenu recipes={recipes}/>
-      <div className='m-5'>
+      <div>
+        <ScrollableMenu categories={categories}/>
         {showRecipeList && <RecipeList recipes={query === '' ? recipes : filteredRecipes} handleRecipeClick={handleRecipeClick}/>}
         {!showRecipeList && <RecipeDetail recipe={currentRecipe} />}
       </div>

@@ -1,14 +1,14 @@
 .menu-item {
   padding: 0 10px;
   margin: 5px 5px;
-  width: 8em;
+  width: 7em;
   text-align: center;
   user-select: none;
   cursor: pointer;
   border: none;
 }
 .menu-item-wrapper.active {
-  border: 1px blue solid;
+  border: none;
 }
 .menu-item.active {
   border: 1px green solid;

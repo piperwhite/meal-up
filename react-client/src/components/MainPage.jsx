@@ -16,6 +16,7 @@ const MainPage = (props) => {
   const [filteredRecipes, setFilteredRecipes] = useState([]);
   const [query, setQuery] = useState('');
   const [categories, setCategories] = useState([]);
+  const [filteredByCategory, setFilteredByCategory] = useState([]);
 
   useEffect(() => {
     fetchRecipes();
@@ -33,7 +34,6 @@ const MainPage = (props) => {
     for (var prop in catObj) {
       categoryList.push({'name': prop, 'imageUrl': catObj[prop]})
     }
-    console.log(categoryList)
     return categoryList;
   }
 
@@ -77,15 +77,21 @@ const MainPage = (props) => {
   }, [query]);
 
   var handleSearch = function( searchQuery ) {
+    setFilteredByCategory([]);
     setQuery(searchQuery.toLowerCase());
+  }
+
+  var handleCategoryClick = function (categoryName) {
+    let filtered = recipes.filter( recipe => recipe.category === categoryName);
+    setFilteredByCategory(filtered);
   }
 
   return (
     <div>
       <NavHeader userName={props.user.displayName} photoURL={props.user.photoURL} handleSignOut={props.handleSignOut} handleAddRecipe={handleAddRecipe} handleSearch={handleSearch}/>
       <div>
-        <ScrollableMenu categories={categories}/>
-        {showRecipeList && <RecipeList recipes={query === '' ? recipes : filteredRecipes} handleRecipeClick={handleRecipeClick}/>}
+        <ScrollableMenu categories={categories} handleCategoryClick={handleCategoryClick}/>
+        {showRecipeList && <RecipeList recipes={filteredByCategory.length === 0? (query === '' ? recipes : filteredRecipes) : filteredByCategory} handleRecipeClick={handleRecipeClick}/>}
         {!showRecipeList && <RecipeDetail recipe={currentRecipe} />}
       </div>
       <AddRecipeModal

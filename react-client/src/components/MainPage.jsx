@@ -4,6 +4,7 @@ import RecipeList from './RecipeList.jsx';
 import NavHeader from './NavHeader.jsx';
 import RecipeDetail from './RecipeDetail.jsx';
 import AddRecipeModal from './AddRecipeModal.jsx';
+import ScrollableMenu from './ScrollableMenu.jsx';
 
 const db = firebase.firestore();
 
@@ -64,6 +65,7 @@ const MainPage = (props) => {
   return (
     <div>
       <NavHeader userName={props.user.displayName} photoURL={props.user.photoURL} handleSignOut={props.handleSignOut} handleAddRecipe={handleAddRecipe} handleSearch={handleSearch}/>
+      <ScrollableMenu recipes={recipes}/>
       <div className='m-5'>
         {showRecipeList && <RecipeList recipes={query === '' ? recipes : filteredRecipes} handleRecipeClick={handleRecipeClick}/>}
         {!showRecipeList && <RecipeDetail recipe={currentRecipe} />}
